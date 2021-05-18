@@ -133,13 +133,13 @@ class User extends Authenticatable
     //ユーザが追加したお気に入り一覧を取得する。
     public function favorites()
     {
-        return $this->belongsToMany(User::class, 'user_id', 'micropost_id')->withTimestamps();
+        return $this->belongsToMany(User::class, 'favorites', 'user_id', 'micropost_id')->withTimestamps();
     }
     
     //ユーザが追加したお気に入りの数を取得する。
-    public function favorite_users()
+    public function loadFavoritesCounts()
     {
-        $this->loadCount(['user_id', 'micropost_id']);
+        $this->loadCount(['favorites', 'user_id', 'micropost_id']);
     }
     
     
