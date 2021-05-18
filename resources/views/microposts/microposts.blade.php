@@ -22,6 +22,10 @@
                             {!! Form::close() !!}
                         @endif
                     </div>
+                    {{-- <div> --}}
+                        {{-- @if (Auth::id() == $micropost->user_id) --}}
+                            {{-- お気に入り登録追加と削除のフォーム --}}
+                    {{-- </div> --}}
                 </div>
             </li>
         @endforeach
