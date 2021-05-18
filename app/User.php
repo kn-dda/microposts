@@ -142,5 +142,39 @@ class User extends Authenticatable
         $this->loadCount(['favorites', 'user_id', 'micropost_id']);
     }
     
-    
+    //ユーザーが特定の投稿内容をお気に入りに追加する
+    public function favorite($userId)
+    {
+        // すでにお気に入りに追加しているかの確認
+        $exist = $this->is_favorite($userId);
+        // 対象が自分自身かどうかの確認
+        $its_me = $this->id == $userId;
+
+        if ($exist || $its_me) {
+            // すでにお気に入り登録していれば何もしない
+            return false;
+        } else {
+            // 未登録であればお気に入りする
+            $this->favorites()->attach($userId);
+            return true;
+        }
+    }
+
+    //ユーザが特定の投稿内容をお気に入りから削除する
+    public function unfavorite($userId)
+    {
+        // すでにお気に入り登録しているかの確認
+        $exist = $this->is_favorite($userId);
+        // 対象が自分自身かどうかの確認
+        $its_me = $this->id == $userId;
+
+        if ($exist && !$its_me) {
+            // すでにお気に入り登録していれば登録を外す
+            $this->favorites()->detach($userId);
+            return true;
+        } else {
+            // 未登録であれば何もしない
+            return false;
+        }
+    }
 }
