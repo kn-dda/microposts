@@ -5,6 +5,8 @@
         <aside class="col-sm-4">
             {{-- ユーザ情報 --}}
             @include('users.card')
+            {{-- お気に入り登録／解除ボタン --}}
+            @include('user_favorite.favorite_button')
         </aside>
         <div class="col-sm-8">
             {{-- タブ --}}
