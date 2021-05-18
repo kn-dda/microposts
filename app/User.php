@@ -130,7 +130,50 @@ class User extends Authenticatable
         $this->loadCount(['microposts', 'followings', 'followers']);
     }
     
-    //ユーザが追加したお気に入り一覧を取得する。
+    // ユーザーが$postIdで指定された投稿内容をお気に入りに追加する
+    public function favorite($postId)
+    {
+        // すでにお気に入りに追加しているかの確認
+        $exist = $this->is_favoring($postId);
+        // 対象が自分の投稿かどうかの確認
+        $its_me = $this->id == $postId;
+
+        if ($exist || $its_me) {
+            // すでにお気に入り登録していれば何もしない
+            return false;
+        } else {
+            // 未登録であればお気に入りする
+            $this->favorites()->attach($postId);
+            return true;
+        }
+    }
+
+    // ユーザが$postIdで指定された投稿内容をお気に入りから削除する
+    public function unfavorite($postId)
+    {
+        // すでにお気に入り登録しているかの確認
+        $exist = $this->is_favoring($postId);
+        // 対象が自分自身かどうかの確認
+        $its_me = $this->id == $postId;
+
+        if ($exist && !$its_me) {
+            // すでにお気に入り登録していれば登録を外す
+            $this->favorites()->detach($postId);
+            return true;
+        } else {
+            // 未登録であれば何もしない
+            return false;
+        }
+    }
+    
+    // 指定された $postIdの投稿内容をこのユーザがお気に入りに追加済みか調べる。追加済みならtrueを返す。
+    public function is_favoring($postId)
+    {
+        // お気に入り登録済みの投稿の中 に$postIdのものが存在するか
+        return $this->favorites()->where('micropost_id', $postId)->exists();
+    }
+    
+    // ユーザが追加したお気に入り一覧を取得する。
     public function favorites()
     {
         return $this->belongsToMany(User::class, 'favorites', 'user_id', 'micropost_id')->withTimestamps();
@@ -140,41 +183,5 @@ class User extends Authenticatable
     public function loadFavoritesCounts()
     {
         $this->loadCount(['favorites', 'user_id', 'micropost_id']);
-    }
-    
-    //ユーザーが特定の投稿内容をお気に入りに追加する
-    public function favorite($userId)
-    {
-        // すでにお気に入りに追加しているかの確認
-        $exist = $this->is_favorite($userId);
-        // 対象が自分自身かどうかの確認
-        $its_me = $this->id == $userId;
-
-        if ($exist || $its_me) {
-            // すでにお気に入り登録していれば何もしない
-            return false;
-        } else {
-            // 未登録であればお気に入りする
-            $this->favorites()->attach($userId);
-            return true;
-        }
-    }
-
-    //ユーザが特定の投稿内容をお気に入りから削除する
-    public function unfavorite($userId)
-    {
-        // すでにお気に入り登録しているかの確認
-        $exist = $this->is_favorite($userId);
-        // 対象が自分自身かどうかの確認
-        $its_me = $this->id == $userId;
-
-        if ($exist && !$its_me) {
-            // すでにお気に入り登録していれば登録を外す
-            $this->favorites()->detach($userId);
-            return true;
-        } else {
-            // 未登録であれば何もしない
-            return false;
-        }
     }
 }
