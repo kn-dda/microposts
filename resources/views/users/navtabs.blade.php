@@ -1,3 +1,4 @@
+{{-- ナビゲーションの表示を行うView --}}
 <ul class="nav nav-tabs nav-justified mb-3">
     {{-- ユーザ詳細タブ --}}
     <li class="nav-item">
@@ -22,7 +23,7 @@
     </li>
     {{-- お気に入り一覧タブ --}}
     <li class="nav-item">
-        <a href="{{ route('favorites.favorites', ['id' => $user->id]) }}" class="nav-link {{ Request::routeIs('favorites.favorites') ? 'active' : '' }}">
+        <a href="{{ route('users.favorites', ['id' => $user->id]) }}" class="nav-link {{ Request::routeIs('users.favorites') ? 'active' : '' }}">
             Favorites
             <span class="badge badge-secondary">{{ $user->favorites_count }}</span>
         </a>

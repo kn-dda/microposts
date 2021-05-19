@@ -1,3 +1,4 @@
+{{-- プロフィールを表示させるView --}}
 <div class="card">
     <div class="card-header">
         <h3 class="card-title">{{ $user->name }}</h3>
@@ -9,5 +10,3 @@
 </div>
 {{-- フォロー／アンフォローボタン --}}
 @include('user_follow.follow_button')
-{{-- お気に入り／お気に入り解除ボタン --}}
-@include('user_favorite.favorite_button')

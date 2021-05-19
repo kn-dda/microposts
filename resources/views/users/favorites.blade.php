@@ -1,3 +1,4 @@
+{{-- お気に入り一覧を表示するページのView --}}
 @extends('layouts.app')
 
 @section('content')

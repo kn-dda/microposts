@@ -1,3 +1,4 @@
+{{-- Micropostの一覧を表示するView --}}
 @if (count($microposts) > 0)
     <ul class="list-unstyled">
         @foreach ($microposts as $micropost)
@@ -22,22 +23,8 @@
                             {!! Form::close() !!}
                         @endif
                     </div>
-                    <div>
-                        @if (Auth::id() == $micropost->micropost_id)
-                            {{-- お気に入り登録追加のフォーム --}}
-                            {!! Form::open(['route' => ['favorites.favorite', $micropost->id], 'method' => 'post']) !!}
-                                {!! Form::submit('Post', ['class' => 'btn btn-danger btn-sm']) !!}
-                            {!! Form::close() !!}
-                        @endif
-                    </div>
-                    <div>
-                        @if (Auth::id() == $micropost->micropost_id)
-                            {{-- お気に入り登録削除のフォーム --}}
-                            {!! Form::open(['route' => ['favorites.unfavorite', $micropost->id], 'method' => 'delete']) !!}
-                                {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
-                            {!! Form::close() !!}
-                        @endif
-                    </div>
+                        {{-- お気に入り登録／解除ボタン --}}
+                        @include('user_favorite.favorite_button')
                 </div>
             </li>
         @endforeach
