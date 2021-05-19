@@ -9,7 +9,7 @@ class MicropostsController extends Controller
     public function index()
     {
         $data = [];
-        if (\Auth::check()) {
+        if (\Auth::check()) { // 認証済みの場合
             // 認証済みユーザ（閲覧者）を取得
             $user = \Auth::user();
             // ユーザとフォロー中ユーザの投稿の一覧を作成日時の降順で取得
@@ -42,7 +42,7 @@ class MicropostsController extends Controller
         return back();
     }
     
-    //投稿の削除
+    //投稿を削除する
     public function destroy($id)
     {
         // idの値で投稿を検索して取得

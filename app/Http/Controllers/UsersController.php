@@ -91,7 +91,7 @@ class UsersController extends Controller
      *
      * @param  $id  ユーザのid
      * @return \Illuminate\Http\Response
-     */
+    */
     public function favorites($id)
     {
         // idの値でユーザを検索して取得
@@ -106,7 +106,7 @@ class UsersController extends Controller
         // お気に入り一覧ビューでそれらを表示
         return view('users.favorites', [
             'user' => $user,
-            'users' => $favorites,
+            'favorites' => $favorites,
         ]);
     }
     

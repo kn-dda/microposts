@@ -132,34 +132,32 @@ class User extends Authenticatable
     }
     
     // ユーザーが$postIdで指定された投稿内容をお気に入りに追加する
-    public function favorite($postId)
+    public function favorite($micropostId)
     {
         // すでにお気に入りに追加しているかの確認
-        $exist = $this->is_favoring($postId);
+        $exist = $this->is_favoring($micropostId);
         // 対象が自分の投稿かどうかの確認
-        $its_me = $this->id == $postId;
 
-        if ($exist || $its_me) {
+        if ($exist) {
             // すでにお気に入り登録していれば何もしない
             return false;
         } else {
             // 未登録であればお気に入りする
-            $this->favorites()->attach($postId);
+            $this->favorites()->attach($micropostId);
             return true;
         }
     }
 
     // ユーザが$postIdで指定された投稿内容をお気に入りから削除する
-    public function unfavorite($postId)
+    public function unfavorite($micropostId)
     {
         // すでにお気に入り登録しているかの確認
-        $exist = $this->is_favoring($postId);
-        // 対象が自分自身かどうかの確認
-        $its_me = $this->id == $postId;
+        $exist = $this->is_favoring($micropostId);
+        // 対象が自分の投稿投稿かどうかの確認
 
-        if ($exist && !$its_me) {
+        if ($exist) {
             // すでにお気に入り登録していれば登録を外す
-            $this->favorites()->detach($postId);
+            $this->favorites()->detach($micropostId);
             return true;
         } else {
             // 未登録であれば何もしない
@@ -168,16 +166,17 @@ class User extends Authenticatable
     }
     
     // 指定された $postIdの投稿内容をこのユーザがお気に入りに追加済みか調べる。追加済みならtrueを返す。
-    public function is_favoring($postId)
+    public function is_favoring($micropostId)
     {
         // お気に入り登録済みの投稿の中 に$postIdのものが存在するか
-        return $this->favorites()->where('micropost_id', $postId)->exists();
+        return $this->favorites()->where('micropost_id', $micropostId)->exists();
     }
     
-    // ユーザが追加したお気に入り一覧を取得する。
+    // あるユーザが追加したお気に入り一覧を取得する。
     public function favorites()
     {
-        return $this->belongsToMany(User::class, 'favorites', 'user_id', 'micropost_id')->withTimestamps();
+        // お気に入りに追加された投稿を取得するため、クラス名はMicropostを指定
+        return $this->belongsToMany(Micropost::class, 'favorites', 'user_id', 'micropost_id')->withTimestamps();
     }
     
 }
