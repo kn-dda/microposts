@@ -22,7 +22,7 @@
     </li>
     {{-- お気に入り一覧タブ --}}
     <li class="nav-item">
-        <a href="{{ route('users.favorites', ['id' => $micropost->id]) }}" class="nav-link {{ Request::routeIs('users.favorites') ? 'active' : '' }}">
+        <a href="{{ route('microposts.microposts', ['id' => $user->id]) }}" class="nav-link {{ Request::routeIs('microposts.microposts') ? 'active' : '' }}">
             Favorites
             <span class="badge badge-secondary">{{ $user->favorites_count }}</span>
         </a>

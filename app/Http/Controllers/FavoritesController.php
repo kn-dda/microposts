@@ -10,7 +10,7 @@ class FavoritesController extends Controller
     public function store($id)
     {
         // 認証済みユーザ（閲覧者）が、 特定の投稿内容をお気に入り追加する
-        \Auth::user()->favorite($id);
+        \Auth::micropost()->favorite($id);
         // 前のURLへリダイレクトさせる
         return back();
     }
@@ -19,7 +19,7 @@ class FavoritesController extends Controller
     public function destroy($id)
     {
         // 認証済みユーザ（閲覧者）が、 特定の投稿内容をお気に入り解除する
-        \Auth::user()->unfavorite($id);
+        \Auth::micropost()->unfavorite($id);
         // 前のURLへリダイレクトさせる
         return back();
     }

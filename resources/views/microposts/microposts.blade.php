@@ -25,8 +25,8 @@
                     <div>
                         @if (Auth::id() == $micropost->micropost_id)
                             {{-- お気に入り登録追加のフォーム --}}
-                            {!! Form::open(['route' => ['favorites.favorite', $micropost->id], 'method' => 'get']) !!}
-                                {!! Form::submit('Get', ['class' => 'btn btn-danger btn-sm']) !!}
+                            {!! Form::open(['route' => ['favorites.favorite', $micropost->id], 'method' => 'post']) !!}
+                                {!! Form::submit('Post', ['class' => 'btn btn-danger btn-sm']) !!}
                             {!! Form::close() !!}
                         @endif
                     </div>
