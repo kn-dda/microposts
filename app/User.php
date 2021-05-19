@@ -127,7 +127,8 @@ class User extends Authenticatable
     //このユーザに関係するモデルの件数をロードする。
     public function loadRelationshipCounts()
     {
-        $this->loadCount(['microposts', 'followings', 'followers']);
+        // タイムライン、フォロー、フォロワー、お気に入りの件数を取得
+        $this->loadCount(['microposts', 'followings', 'followers', 'favorites']);
     }
     
     // ユーザーが$postIdで指定された投稿内容をお気に入りに追加する
@@ -179,9 +180,4 @@ class User extends Authenticatable
         return $this->belongsToMany(User::class, 'favorites', 'user_id', 'micropost_id')->withTimestamps();
     }
     
-    //ユーザが追加したお気に入りの数を取得する。
-    public function loadFavoritesCounts()
-    {
-        $this->loadCount(['favorites', 'user_id', 'micropost_id']);
-    }
 }
