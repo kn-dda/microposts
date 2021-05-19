@@ -22,10 +22,22 @@
                             {!! Form::close() !!}
                         @endif
                     </div>
-                    {{-- <div> --}}
-                        {{-- @if (Auth::id() == $micropost->user_id) --}}
-                            {{-- お気に入り登録追加と削除のフォーム --}}
-                    {{-- </div> --}}
+                    <div>
+                        @if (Auth::id() == $micropost->micropost_id)
+                            {{-- お気に入り登録追加のフォーム --}}
+                            {!! Form::open(['route' => ['favorites.favorite', $micropost->id], 'method' => 'get']) !!}
+                                {!! Form::submit('Get', ['class' => 'btn btn-danger btn-sm']) !!}
+                            {!! Form::close() !!}
+                        @endif
+                    </div>
+                    <div>
+                        @if (Auth::id() == $micropost->micropost_id)
+                            {{-- お気に入り登録削除のフォーム --}}
+                            {!! Form::open(['route' => ['favorites.unfavorite', $micropost->id], 'method' => 'delete']) !!}
+                                {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+                            {!! Form::close() !!}
+                        @endif
+                    </div>
                 </div>
             </li>
         @endforeach
