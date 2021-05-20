@@ -11,6 +11,7 @@ class UsersController extends Controller
     public function index()
     {
         // ユーザ一覧をidの降順で取得
+        // ページネーション：値の数だけユーザ一覧が立て並びになる
         $users = User::orderBy('id', 'desc')->paginate(10);
 
         // ユーザ一覧ビューでそれを表示
@@ -29,6 +30,7 @@ class UsersController extends Controller
         $user->loadRelationshipCounts();
 
         // ユーザの投稿一覧を作成日時の降順で取得
+        // ページネーション：値の数だけ投稿一覧が立て並びになる
         $microposts = $user->microposts()->orderBy('created_at', 'desc')->paginate(10);
 
         // ユーザ詳細ビューでそれらを表示
@@ -53,6 +55,7 @@ class UsersController extends Controller
         $user->loadRelationshipCounts();
 
         // ユーザのフォロー一覧を取得
+        // ページネーション：値の数だけフォロー一覧が立て並びになる
         $followings = $user->followings()->paginate(10);
 
         // フォロー一覧ビューでそれらを表示
@@ -77,6 +80,7 @@ class UsersController extends Controller
         $user->loadRelationshipCounts();
 
         // ユーザのフォロワー一覧を取得
+        // ページネーション：値の数だけフォロワー一覧が立て並びになる
         $followers = $user->followers()->paginate(10);
 
         // フォロワー一覧ビューでそれらを表示
@@ -101,6 +105,7 @@ class UsersController extends Controller
         $user->loadRelationshipCounts();
 
         // ユーザのお気に入り一覧を取得
+        // ページネーション：値の数だけお気に入り一覧が立て並びになる
         $favorites = $user->favorites()->paginate(10);
 
         // お気に入り一覧ビューでそれらを表示
@@ -110,5 +115,4 @@ class UsersController extends Controller
             'microposts' => $favorites,
         ]);
     }
-    
 }

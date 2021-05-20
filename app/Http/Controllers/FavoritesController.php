@@ -14,7 +14,6 @@ class FavoritesController extends Controller
         // 前のURLへリダイレクトさせる
         return back();
     }
-    
     //ユーザがお気に入りを削除
     public function destroy($id)
     {
@@ -23,5 +22,4 @@ class FavoritesController extends Controller
         // 前のURLへリダイレクトさせる
         return back();
     }
-    
 }
