@@ -13,7 +13,7 @@ class MicropostsController extends Controller
             // 認証済みユーザ（閲覧者）を取得
             $user = \Auth::user();
             // ユーザとフォロー中ユーザの投稿の一覧を作成日時の降順で取得
-            $microposts = $user->feed_microposts()->orderBy('created_at', 'desc')->paginate(1);
+            $microposts = $user->feed_microposts()->orderBy('created_at', 'desc')->paginate(10);
             $data = [
                 'user' => $user,
                 'microposts' => $microposts,
