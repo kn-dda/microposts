@@ -1,3 +1,4 @@
+{{-- フォロー一覧を表示するページのView --}}
 @extends('layouts.app')
 
 @section('content')
